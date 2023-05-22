@@ -20,6 +20,9 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    block: {
+        
+    }
 })
 
 const User = new mongoose.model("evuser",userSchema);

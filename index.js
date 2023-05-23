@@ -28,7 +28,7 @@ async function updateSlots() {
     if (currentMinutes % 30 === 0) {
         console.log("in");
         const index = ((currentHours * 60) + currentMinutes) / 30;
-
+        // const index = 0;
 
         try {
             // Find the station in the database
@@ -97,6 +97,7 @@ app.post("/contacts", async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
+        console.log(req.body);
 
         const user = await reg.findOne({ email: email });
         if (!user) {
@@ -110,7 +111,7 @@ app.post("/login", async (req, res) => {
         }
 
         // Authentication successful
-        res.send({ message: "Login successful" });
+        res.send({ message: "Login successful",user});
     } catch (e) {
         console.log(e);
         res.status(500).send({ message: "Internal Server Error" });
@@ -190,8 +191,8 @@ app.get("/stationdata", async (req, res) => {
 
 app.get("/availability", async (req, res) => {
     try {
-        const startTime = req.body.startTime; // Retrieve the index from the query parameters
-        const numSlots = req.body.Slots // Retrieve the number of slots from the query parameters
+        const startTime = req.query.startTime; // Retrieve the index from the query parameters
+        const numSlots = req.query.Slots // Retrieve the number of slots from the query parameters
         console.log(req.body);
         const [hr, min] = startTime.split(":").map(Number);
         const index = ((hr * 60) + min) / 30;
